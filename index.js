@@ -105,12 +105,12 @@ app.controller('ctrl', ['$scope', function ($scope) {
                     $scope.continueAttempt2 = 0;
                     $scope.continueAttempt3 = 0;
                 }
-                if ($scope.attempt > 1000) {
+                if ($scope.attempt > 100) {
 //                    $scope.emptyTable();
                     break;
                     $scope.resetCount++;
                 }
-                if ($scope.resetCount > 10) {
+                if ($scope.resetCount > 100) {
                     break;
                 }
             }
@@ -281,14 +281,14 @@ app.controller('ctrl', ['$scope', function ($scope) {
 
             for (var i = 0; i < hints.length; i++) {
                 if ($scope.startGuess(row, col, hints[i])) {
-                    break;
+                    return true;
                 }
                 table = $scope.table = copyTable(guess.table);
                 $scope.fillHints();
             }
 
 //            console.log('Sudoku Completed.');
-            return true;
+            return false;
         };
 
         $scope.solveSudoku = function () {
@@ -417,37 +417,21 @@ app.controller('ctrl', ['$scope', function ($scope) {
         };
 
         $scope.preFill = function () {
-            table[0][0] = 7;
-            table[0][2] = 3;
-            table[0][8] = 6;
-            table[1][1] = 1;
-            table[1][5] = 9;
-            table[2][1] = 9;
-            table[2][2] = 6;
-            table[2][3] = 1;
-            table[2][7] = 3;
-            table[3][0] = 5;
-            table[3][5] = 7;
-            table[3][6] = 9;
-            table[3][8] = 4;
-            table[4][3] = 8;
-            table[4][4] = 1;
-            table[4][6] = 2;
-            table[5][3] = 5;
-            table[6][2] = 2;
-            table[6][3] = 4;
-            table[6][8] = 8;
-            table[8][0] = 3;
-            table[8][2] = 4;
-            table[8][7] = 6;
+            table = $scope.table = [
+                ['', '', '', /* */'', '', '', /*    */'', '', 3],
+                [7, 4, '', /*   */3, '', '', /*    */'', '', ''],
+                [8, '', '', /*  */'', 5, '', /*    */4, 9, 6],
 
-            for (var i = 0; i < 9; i++) {
-                for (var j = 0; j < 9; j++) {
-                    if (table[i][j]) {
-                        preDefined[i][j] = table[i][j];
-                    }
-                }
-            }
+                ['', '', '', /* */'', 6, '', /*    */'', 8, ''],
+                ['', '', '', /* */4, '', 5, /*    */'', '', ''],
+                [5, '', 1, /* */'', '', '', /*    */'', 7, ''],
+
+                [9, '', '', /* */'', 7, '', /*    */5, 3, ''],
+                ['', '', '', /* */'', '', '', /*    */6, '', ''],
+                ['', 1, '', /* */'', '', 9, /*    */'', '', '']
+            ];
+
+            preDefined = $scope.preDefined = copyTable(table);
         };
 
         $scope.fillNumber = function (num) {
