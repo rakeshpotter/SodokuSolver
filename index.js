@@ -1,6 +1,6 @@
 var app = angular.module('app', []);
 app.controller('ctrl', ['$scope', function ($scope) {
-        $scope.userInput = false;
+        $scope.userInput = 0;
         var table = $scope.table = [];
         var preDefined = $scope.preDefined = [];
         var tableH = $scope.tableH = [];
@@ -237,28 +237,28 @@ app.controller('ctrl', ['$scope', function ($scope) {
 
         $scope.startGuess = function (row, col, h) {
             if (h) {
-                console.log('hint guess = ', row, col, tableH[row][col].indexOf(h), h);
+//                console.log('hint guess = ', row, col, tableH[row][col].indexOf(h), h);
                 $scope.hintCellClicked(row, col, tableH[row][col].indexOf(h));
                 $scope.fillAllUnique();
                 var ehc = emptyHintCount();
                 if (ehc > 0) {
-                    console.log('Empty hint cell = ', ehc);
+//                    console.log('Empty hint cell = ', ehc);
                     return false;
                 }
                 var ecc = emptyCellCount();
                 if (ecc > 0) {
-                    console.log('Empty cell = ', ecc);
+//                    console.log('Empty cell = ', ecc);
                     return $scope.startGuess();
                 }
                 return true;
             }
-            console.log('startGuess------');
+//            console.log('startGuess------');
             var cell = getLeastHintCountCell();
             var row = cell[0];
             var col = cell[1];
             if (row == -1 || col == -1) {
-                console.log('Can not guess-----');
-                return;
+//                console.log('Can not guess-----');
+                return false;
             }
             var hints = tableH[row][col];
             var guess = {table: copyTable(table)};
@@ -271,7 +271,14 @@ app.controller('ctrl', ['$scope', function ($scope) {
                 $scope.fillHints();
             }
 
-            console.log('Sudoku Completed.');
+//            console.log('Sudoku Completed.');
+            return true;
+        };
+
+        $scope.solveSudoku = function () {
+            $scope.fillHints();
+            $scope.fillAllUnique();
+            $scope.startGuess();
         };
 
         $scope.fillAllSingles = function () {
