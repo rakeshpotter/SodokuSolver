@@ -46,16 +46,16 @@ td:hover{
 .blank{
     background-color: #ffff99;
 }
-.selected{
-    background-color: #d4d4f6;
-    border-color: #000;
-}
 .preDefined{
-    color: #0000ff;
-    background-color: #eee;
+    color: #fff;
+    background-color: #888;
 }
 .used{
     background-color: #b8fcc9;
     font-size: 40px;
     color: #009500;
+}
+.selected{
+    background-color: #0076cb !important;
+    border-color: #000;
 }

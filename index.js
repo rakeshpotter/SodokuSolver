@@ -90,13 +90,13 @@ app.controller('ctrl', ['$scope', function ($scope) {
                     $scope.continueAttempt3++;
                     $scope.removeLast();
                     if ($scope.continueAttempt2 > 10) {
-                        console.log('Attempt2');
+//                        console.log('Attempt2');
                         $scope.continueAttempt2 = 0;
                         $scope.saveFailedPostion();
                         $scope.removeLast();
                     }
                     if ($scope.continueAttempt3 > 20) {
-                        console.log('Attempt3');
+//                        console.log('Attempt3');
                         $scope.continueAttempt3 = 0;
                         $scope.saveFailedPostion();
                         $scope.removeLast();
@@ -114,6 +114,22 @@ app.controller('ctrl', ['$scope', function ($scope) {
                     break;
                 }
             }
+        }
+
+        $scope.getProblem = function (percent) {
+            $scope.reset();
+            $scope.fillAll();
+            var removeCount = Math.floor(81 * percent / 100);
+            for (var i = 0; i < removeCount; ) {
+                var row = Math.floor(Math.random() * 10) % 9;
+                var col = Math.floor(Math.random() * 10) % 9;
+                if (table[row][col]) {
+                    table[row][col] = '';
+                    i++;
+                }
+            }
+            preDefined = $scope.preDefined = copyTable(table);
+            $scope.userInput = 1;
         }
 
         $scope.saveFailedPostion = function () {
@@ -169,7 +185,7 @@ app.controller('ctrl', ['$scope', function ($scope) {
                     $scope.resetAll();
                     break;
                 case code == 32://Space
-                    fillNumber(0);
+                    $scope.fillNumber(0);
                     break;
                 case code == 13://Enter
                     $scope.fillAll();
@@ -198,7 +214,7 @@ app.controller('ctrl', ['$scope', function ($scope) {
                 case (code >= 48 && code <= 57) || (code >= 96 && code <= 105)://Digits
                     var num = code;
                     num -= (code >= 48 && code <= 57) ? 48 : 96;
-                    fillNumber(num);
+                    $scope.fillNumber(num);
                     break;
             }
         }
@@ -434,7 +450,7 @@ app.controller('ctrl', ['$scope', function ($scope) {
             }
         };
 
-        function fillNumber(num) {
+        $scope.fillNumber = function (num) {
             if (num == 0)
                 num = '';
             table[$scope.selectedRow][$scope.selectedCol] = num;
@@ -515,7 +531,7 @@ app.controller('ctrl', ['$scope', function ($scope) {
         }
 
         $scope.resetAll = function () {
-            console.log('Reset All---------------------');
+//            console.log('Reset All---------------------');
             $scope.emptyTable(true);
             $scope.resetCount = 0;
         }

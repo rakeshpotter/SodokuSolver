@@ -9,9 +9,11 @@
         <script src="index.js" type="text/javascript"></script>
     </head>
     <body ng-app="app" ng-controller="ctrl" ng-keydown="keyUp($event)">
-        Mode: <input type="radio" ng-model="userInput" ng-value="0" id="radio1"/> <label for="radio1">Question Mode (Fill Available Numbers)</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="radio" ng-model="userInput" ng-value="1" id="radio2"/> <label for="radio2">Answer Mode (Fill Solutions)</label><br>
-        <table >
+        <div style="padding: 10px;">
+            Mode: <input type="radio" ng-model="userInput" ng-value="0" id="radio1"/> <label for="radio1">Question Mode (Fill Available Numbers)</label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" ng-model="userInput" ng-value="1" id="radio2"/> <label for="radio2">Answer Mode (Fill Solutions)</label><br>
+        </div>
+        <table style="float: left;margin-right: 20px;">
             <tr ng-repeat="(i,row) in table track by $index">
                 <td ng-repeat="(j,col) in row track by $index" 
                     ng-class="[style[i][j],{selected:(selectedRow == i && selectedCol == j), preDefined: preDefined[i][j]}]"
@@ -19,6 +21,36 @@
                     class="{{col == '' ? 'blank' : ''}}">{{col}}</td>
             </tr>
         </table>
-        <button ng-click="solveSudoku()">Solve</button>
+
+        <div style="float: left;">
+            Inputs:
+            <table>
+                <tr>
+                    <td ng-click="fillNumber(1)">1</td>
+                    <td ng-click="fillNumber(2)">2</td>
+                    <td ng-click="fillNumber(3)">3</td>
+                    <td style="width: 200px;"></td>
+                </tr>
+                <tr>
+                    <td ng-click="fillNumber(4)">4</td>
+                    <td ng-click="fillNumber(5)">5</td>
+                    <td ng-click="fillNumber(6)">6</td>
+                    <td ng-click="fillNumber(0)">Clear Cell</td>
+                </tr>
+                <tr>
+                    <td ng-click="fillNumber(7)">7</td>
+                    <td ng-click="fillNumber(8)">8</td>
+                    <td ng-click="fillNumber(9)">9</td>
+                    <td ng-click="emptyTable()">Clear All</td>
+                </tr>
+            </table><br><br><br><br>
+            <button ng-click="solveSudoku()">Solve</button>
+            <button ng-click="resetAll()" style="float: right;">Reset</button>
+            <br><br><br><br>
+            <button ng-click="getProblem(80)">Get Easy Problem</button><br>
+            <button ng-click="getProblem(85)">Get Medium Problem</button><br>
+            <button ng-click="getProblem(90)">Get Hard Problem</button><br>
+            <button ng-click="getProblem(95)">Get Expert Problem</button>
+        </div>
     </body>
 </html>
